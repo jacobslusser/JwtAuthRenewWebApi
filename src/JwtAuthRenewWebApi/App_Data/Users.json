@@ -1,0 +1,20 @@
+﻿[
+  {
+    "UserId": 3001,
+    "FullName": "Liz Lemon",
+    "EmailAddress": "liz.lemon@example.com",
+    "Password": "Password1"
+  },
+  {
+    "UserId": 3002,
+    "FullName": "Jack Donaghy",
+    "EmailAddress": "jack.donaghy@example.com",
+    "Password": "Password1"
+  },
+  {
+    "UserId": 3003,
+    "FulName": "Tracy Jordan",
+    "EmailAddress": "tracy.jordan@example.com",
+    "Password": "Password1"
+  }
+]
