@@ -37,12 +37,13 @@ namespace JwtAuthRenewWebApi.Controllers
                 return Unauthorized();
 
             var lifetimeInMinutes = int.Parse(WebConfigurationManager.AppSettings["TokenLifetimeInMinutes"]);
-            var token = CreateToken(user, lifetimeInMinutes);
+            var token = CreateToken(user.UserId.ToString(), user.FullName, lifetimeInMinutes);
 
             return Ok(new
             {
                 Token = token,
-                LifetimeInMinutes = lifetimeInMinutes
+                LifetimeInMinutes = lifetimeInMinutes,
+                FullName = user.FullName
                 // Any anything else that you want here...
             });
         }
@@ -52,20 +53,20 @@ namespace JwtAuthRenewWebApi.Controllers
         public async Task<IHttpActionResult> GetUser(long userId)
         {
             // Example of using the JWT claims to ensure a user can only access their own user information
-            if (userId.ToString() != User.Identity.Name)
+            if (userId.ToString() != User.Identity.GetUserId())
                 return Unauthorized();
 
-
-            return null;
+            // TODO
+            return Ok();
         }
 
-        public static string CreateToken(User user, int lifetimeInMinutes)
+        public static string CreateToken(string userId, string fullName, int lifetimeInMinutes)
         {
             // Create the JWT
             var claimsIdentity = new ClaimsIdentity(new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
-                new Claim("name", user.FullName)
+                new Claim(JwtRegisteredClaimNames.Sub, userId),
+                new Claim("name", fullName)
                 // And any other bit of (session) data you want....
             });
 

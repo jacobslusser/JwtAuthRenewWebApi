@@ -13,7 +13,7 @@
   },
   {
     "UserId": 3003,
-    "FulName": "Tracy Jordan",
+    "FullName": "Tracy Jordan",
     "EmailAddress": "tracy.jordan@example.com",
     "Password": "Password1"
   }

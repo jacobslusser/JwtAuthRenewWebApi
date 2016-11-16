@@ -18,30 +18,14 @@ namespace JwtAuthRenewWebApi
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            // Limit our services responses to camelCase JSON only
-            var jsonFormatter = new JsonMediaTypeFormatter();
-            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            config.Services.Replace(typeof(IContentNegotiator), new JsonContentNegotiator(jsonFormatter));
-
-            // Configure the authentication filter to run on every request
+            // Configure the authentication filter to run on every request marked with the AuthorizeAttribute
             config.Filters.Add(new BearerAuthenticationFilter());
-        }
 
-        // A content negotiator that serves only JSON.
-        public class JsonContentNegotiator : IContentNegotiator
-        {
-            private readonly JsonMediaTypeFormatter formatter;
+            // Configure the sliding expiration handler to run on every request
+            config.MessageHandlers.Add(new SlidingExpirationHandler());
 
-            public ContentNegotiationResult Negotiate(Type type, HttpRequestMessage request, IEnumerable<MediaTypeFormatter> formatters)
-            {
-                var result = new ContentNegotiationResult(formatter, new MediaTypeHeaderValue("application/json"));
-                return result;
-            }
-
-            public JsonContentNegotiator(JsonMediaTypeFormatter formatter)
-            {
-                this.formatter = formatter;
-            }
+            // Help our JSON look professional using camelCase
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }

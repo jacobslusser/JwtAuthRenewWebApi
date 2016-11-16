@@ -68,9 +68,10 @@ namespace JwtAuthRenewWebApi.Security
 
             try
             {
-                SecurityToken securityToken;
                 var tokenHandler = new JwtSecurityTokenHandler();
                 tokenHandler.InboundClaimTypeMap["name"] = ClaimTypes.Name;
+
+                SecurityToken securityToken;
                 var principal = context.Principal = tokenHandler.ValidateToken(token, validationParams, out securityToken);
             }
             catch(Exception ex)

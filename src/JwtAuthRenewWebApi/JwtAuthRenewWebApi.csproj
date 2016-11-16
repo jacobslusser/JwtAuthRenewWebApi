@@ -119,7 +119,9 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\BearerAuthenticationFilter.cs" />
+    <Compile Include="Security\IdentityExtensions.cs" />
     <Compile Include="Security\SecurityConfiguration.cs" />
+    <Compile Include="Security\SlidingExpirationHandler.cs" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
