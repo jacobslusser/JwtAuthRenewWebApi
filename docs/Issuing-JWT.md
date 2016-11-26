@@ -125,7 +125,7 @@ To see what that JSON data looks like we can use any number of tools which will 
 
 Here is the decoded data using an online tool referenced at the end of this document:
 
-```json
+```
 {
  alg: "HS256",
  typ: "JWT"
