@@ -15,7 +15,7 @@ The important parts are there. What remains is to do is complete the documentati
   * [Authentication and Authorization in ASP.NET Web API](https://www.asp.net/web-api/overview/security/authentication-and-authorization-in-aspnet-web-api)
 * Uses Microsoft's JSON Web Token Handler library -- a well-tested and authoritative source for JWT support in Web API
   * [JSON Web Token Handler](https://msdn.microsoft.com/en-us/library/dn205065(v=vs.110).aspx)
-  * [System.IdentityModel.Tokens.Jwt](https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/)
+  * [`System.IdentityModel.Tokens.Jwt`](https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/)
 * Well-documented code and examples, including how to write a custom `IAuthenticationFilter` and `DelegatingHandler`
   * [Authentication Filters in ASP.NET Web API 2](https://www.asp.net/web-api/overview/security/authentication-filters)
   * [HTTP Message Handlers in ASP.NET Web API](https://www.asp.net/web-api/overview/advanced/http-message-handlers)
@@ -24,9 +24,16 @@ The important parts are there. What remains is to do is complete the documentati
 
 *The project is written to use the Web API 2 pipeline and IIS hosting, but the concepts are easily adaptable to a self-hosted OWIN type project.*
 
-## Documentation
+## Using the Sample
 
 Coming soon...
+
+## Documentation
+
+* Using the sample
+* [Issuing a JWT](docs/Issuing-JWT.md)
+* Validating a JWT
+* Reissusing a JWT with a new (sliding) expiration
 
 ## License
 
