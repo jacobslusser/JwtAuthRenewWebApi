@@ -36,7 +36,7 @@ Finally, we also need a timeout value for the token.
 We store all this information in the `Web.config`:
 
 ```xml
-<!-- DO NOT USE THE SIGNING KEY BELOW IN YOUR OWN PROJECT. GENERATE YOUR OWN. -->
+<!-- DO NOT USE THE SAMPLE SIGNING KEY BELOW IN YOUR OWN PROJECT. GENERATE YOUR OWN. -->
 <add key="SigningKey" value="4b990cd882af4519878c8e0a94419b0f90b23cd097c8226192ce22d9a619733a" />
 <add key="TokenIssuer" value="http://my.website.com" />
 <add key="TokenAudience" value="http://my.website.com" />
@@ -163,3 +163,4 @@ Usually a signed JWT is all that is necessary.*
 * [Stack Overflow: Error trying to generate token using .NET JWT library](http://stackoverflow.com/a/38364979)
 * [Postman](https://www.getpostman.com/)
 * [JWT Decoder](http://calebb.net/)
+* [Ultra High Security Password Generator](https://www.grc.com/passwords.htm)

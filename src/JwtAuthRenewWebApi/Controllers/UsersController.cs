@@ -56,8 +56,8 @@ namespace JwtAuthRenewWebApi.Controllers
             if (userId.ToString() != User.Identity.GetUserId())
                 return Unauthorized();
 
-            // TODO
-            return Ok();
+            var user = users.First(u => u.UserId == userId);
+            return Ok(user);
         }
 
         public static string CreateToken(string userId, string fullName, int lifetimeInMinutes)
