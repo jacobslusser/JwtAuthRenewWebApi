@@ -5,10 +5,10 @@ A sample project for adding JWT authentication and sliding expiration support in
 ### Background
 
 I like JWT. I think it is a simple and elegant solution for authenticating REST / AJAX / Web API calls.
-For some time now I've been urging my coworkers to switch our single-page-application (SPA) websites to use JWT for authentication instead of cookies.
+For some time now I've been urging my coworkers to switch our single-page-application (SPA) websites to use JWT for authentication and state instead of cookies and session.
 
 For those unfamiliar with it, however, it can be scary, confusing, and even difficult to integrate into their new / existing projects based on some of the scattered resources and documentation out there.
-This sample project is meant to illustrate that it is in fact quite easy.
+This sample project is meant to illustrate that it is in fact quite simple.
 
 ### Project Status
 

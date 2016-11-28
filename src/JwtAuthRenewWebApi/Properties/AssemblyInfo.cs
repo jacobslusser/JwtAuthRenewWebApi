@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("JwtAuthRenewWebApi")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Copyright (c) 2016 Jacob Slusser")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
