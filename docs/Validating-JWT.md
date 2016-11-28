@@ -86,6 +86,7 @@ If a token is found, we run it through the `JwtSecurityTokenHandler` -- the very
 Not surprisingly, we pass it almost the same arguments, this time to validate the token rather than create it.
 Namely, we want to tell it to validate the issuer, audience, and signing key using the values we keep in our `Web.config` via the `SecurityConfiguration` class.
 We also ask it to validate the expiration time. This is important and something you do not want to miss; otherwise, a token would never be considered expired and could be used forever.
+The token is valid when the payload hash matches the attached signature using the signing key, the issuer and audience match our whitelist, *and* the token's expiration date/time has not passed.
 
 If the token is valid, the helper class will automatically create the `ClaimsPrincipal` we use it to set the current user.
 That is the key to getting the `[Authorize]` attribute to work. The `AuthorizeAttribute` looks for a current user / thread principal.
