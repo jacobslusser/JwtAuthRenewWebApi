@@ -43,8 +43,8 @@ We store all this information in the `Web.config`:
 <add key="TokenLifetimeInMinutes" value="30" />
 ```
 
-*You'll want to make sure the `SigningKey` is a randomly generated, cryptographically secure value that you keep secret at all times.
-**Do not use the default value in the sample project**. Create your own and guard it like you would a connection string to your database.*
+_You'll want to make sure the `SigningKey` is a randomly generated, cryptographically secure value that you keep secret at all times.
+**Do not use the default value in the sample project**. Create your own and guard it like you would a connection string to your database._
 
 To make using these values easier they are pulled from the `Web.config` into the `SecurityConfiguration` class.
 
