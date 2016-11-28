@@ -19,11 +19,14 @@ Our job will be to look for a JWT in the request, and if found and valid, set th
 All of Web APIs authorization checks, including the `[Authorize]` attribute depend on that.
 If the user is not authenticated, we leave the current principal as is and Web API will do the work for us of rejecting the request with a `401 Unauthorized` error.
 
+*Microsoft would have you believe that you also need a full implementation of the `IAuthenticationFilter.ChallengeAsync` method as well, but that is not true.
+The HTTP spec allows for a special "challenge" response to be sent in response to an unauthenticated request that the browser will then use to prompt the user for their credentials.
+Since we are serving data of our Web API, not UI, there is no need for this prompting of the users for credentials.
+We can ignore the `ChallengeAsync` method and let any client code (JavaScript) handle the error code (`401 Unauthorized`) appropriately.*
+
 ## AuthenticateAsync
 
-Our implementation of the `IAuthenticationFilter` interface is found in the `BearerAuthenticationFilter` class.
-
-Our `AuthenticateAsync` method looks something like this:
+Our implementation of the `IAuthenticationFilter` interface is found in the `BearerAuthenticationFilter` class and this is what our `AuthenticateAsync` method looks like:
 
 ```cs
 public async Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
@@ -79,14 +82,14 @@ public async Task AuthenticateAsync(HttpAuthenticationContext context, Cancellat
 As is the custom, we look for the JWT token in the `Authorization` HTTP header using the `"Bearer"` scheme.
 If the header is not present, we assume this to be an unauthenticated request, exit the method, and let the Web API pipeline process as usual.
 
-If a token is found, we run it though the `JwtSecurityTokenHandler` -- the very same utility class we used to create the token.
-Not suprisingly, we pass it almost the same arguments, this time to validate the token rather than create it.
+If a token is found, we run it through the `JwtSecurityTokenHandler` -- the very same utility class we used to create the token.
+Not surprisingly, we pass it almost the same arguments, this time to validate the token rather than create it.
 Namely, we want to tell it to validate the issuer, audience, and signing key using the values we keep in our `Web.config` via the `SecurityConfiguration` class.
-We also ask it to validate the expiration time. This is important and something you do no want to miss.
+We also ask it to validate the expiration time. This is important and something you do not want to miss; otherwise, a token would never be considered expired and could be used forever.
 
-If the token is valid, the helper class will automatically create the `ClaimsPrincipal` we set for the current user / thread.
+If the token is valid, the helper class will automatically create the `ClaimsPrincipal` we use it to set the current user.
 That is the key to getting the `[Authorize]` attribute to work. The `AuthorizeAttribute` looks for a current user / thread principal.
-If found the request is considered authorized; if not, it is rejected automatically with a `401 Unauthorized` error for routes using the `[Authorize]` attribute.
+If found the request is considered authorized; if not, it is rejected automatically with a `401 Unauthorized` error.
 
 ## Advanced: Customizing the ClaimsPrincipal
 
@@ -118,7 +121,7 @@ public static void Register(HttpConfiguration config)
 
 Once the `ClaimsPrincipal` is set, we can make use of it in any controller that needs that lookup data.
 For example, below we pull the current user ID from the `ClaimsPrincipal`.
-We can then use that to make sure the user is only requesting the user record for him / herself, and not another user.
+We can then use that to enforce permissions and make sure the calling user can only request his / her own record, and not another user's.
 
 ```cs
 [Authorize]
@@ -141,48 +144,47 @@ In most / all cases this renders the use of "session state" obsolete.
 
 ## Seeing it in Action
 
-To see how authorization works, we can obtain a token from the `api/v1/authenticate` API and then subsequently use it in a few other calls.
+To see how authorization works, we can obtain a token from the `api/v1/users/authenticate` API and then use it in another call such as `api/v1/ping/authenticated`.
+If we call `ping/authenticated` without a token we'll get a `401 Unauthorized` error because the route is tagged with the `[Authorize]` attribute.
+If on the other hand, we call `users/authenticate` first, the token will get stored in a `token` variable and our call to `ping/authenticated` will succeed.
 
-The following jQuery code demonstrates a few of the calls in the sample project that either require or don't require authentication.
+The following jQuery code demonstrates those two calls and is an excerpt from the `Example.html` file included with the project:
 
 ```js
-$.get('http://localhost:30908/api/v1/ping')
-  .done(function () {
-    // This call will always work because it doesn't have the [Authorize] attribute
-  });
+var token;
 
-$.get('http://localhost:30908/api/v1/ping/authenticated')
-  .fail(function () {
-    // This call will only work when the request is authenticated because it uses the [Authorize] attribute
-  });
+$('#ping').submit(function (event) {
+    event.preventDefault();
+    var settings = {
+        url: 'api/v1/ping/authenticated',
+        headers: {
+            // Include the JWT in the Authorization header
+            Authorization: (token ? 'Bearer ' + token : null)
+        }
+    };
+    $.get(settings)
+        .then(function () {
+            alert('Success');
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            alert('Unauthenticated or unexpected error.');
+        });
+});
 
-var credentials = {
-  emailAddress: 'liz.lemon@example.com',
-  password: 'Password1'
-};
-
-var promise = $.post('http://localhost:30908/api/v1/users/authenticate', credentials);
-promise.done(function (data) {
-  var jwt = data.token; // Could be stored in localStorage
-
-  $.get({
-    url: 'http://localhost:30908/api/v1/ping/authenticated',
-    headers: {
-      Authorization: 'Bearer ' + jwt
-    }
-  })
-    .done(function () {
-      // This call will now succeed because we are passing the JWT in the Authorization header
-    });
-
-  $.get({
-    url: 'http://localhost:30908/api/v1/users/3001',
-    headers: {
-      Authorization: 'Bearer ' + jwt
-    }
-  })
-    .done(function () {
-      // This call will succeed when we are asking for our own user record, but will fail if we try to access another user's record
-    });
+$('#authenticate').submit(function (event) {
+    event.preventDefault();
+    var credentials = $(this).serialize();
+    $.post('api/v1/users/authenticate', credentials)
+        .then(function (user) {
+            // The JWT is returned in the token property
+            token = user.token;
+            alert('Success');
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            alert('Invalid email address and / or password, or unexpected error.');
+        });
 });
 ```
+## References
+* [JSON Web Token Introduction](https://jwt.io/introduction/)
+* [Authentication Filters in ASP.NET Web API 2](https://www.asp.net/web-api/overview/security/authentication-filters)

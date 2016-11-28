@@ -1,5 +1,7 @@
 # Reissusing a JWT with a New (Sliding) Expiration
 
+*This document supposes that you have already read and understand the guides on [Issuing a JWT](Issuing-JWT.md) and [Validating a JWT](Validating-JWT.md).*
+
 I was once on a project where the developers were using JWT for authentication but it had an absolute expiration.
 I asked them to make it a sliding expiration and their response was that it would be a huge development task because they would have to potentially return a new JWT in any / every response and would therefore need to add it is a property in the response model for every call.
 At this point I face palmed and started working on this sample project to illustrate how much easier it is than that when you understand the HTTP protocol and the Web API pipeline.
@@ -69,7 +71,7 @@ If we wanted to get fancy we could minimize how often we respond with an updated
 
 Remember, we only get a valid `ClaimsPrincipal` if the request was authenticated with a valid JWT to begin with, so there is no danger of us returning an updated JWT to a caller who never had one in the first place.
 
-## Registering the handler
+## Registering the Handler
 
 The only thing that remains is to make sure this handler gets run on every request / response.
 We do that by registering it at application startup like so:

@@ -18,7 +18,8 @@
         var settings = {
             url: 'api/v1/ping/authenticated',
             headers: {
-                Authorization: (token ? 'Bearer ' + token : '')
+                // Include the JWT in the Authorization header
+                Authorization: (token ? 'Bearer ' + token : null)
             }
         };
         $.get(settings)
