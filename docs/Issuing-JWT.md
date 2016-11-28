@@ -44,7 +44,7 @@ We store all this information in the `Web.config`:
 ```
 
 *You'll want to make sure the `SigningKey` is a randomly generated, cryptographically secure value that you keep secret at all times.
-DO NOT USE THE DEFAULT VALUE IN THE SAMPLE PROJECT. Create your own and guard it like you would a connection string to your database.*
+**Do not use the default value in the sample project**. Create your own and guard it like you would a connection string to your database.*
 
 To make using these values easier they are pulled from the `Web.config` into the `SecurityConfiguration` class.
 
@@ -154,6 +154,8 @@ You can be sure that the JWT you created is *exactly* the same one that comes ba
 But I have yet to find a reason to use them.
 When used properly a JWT should only contain lookup values, IDs, etc... and never sensitive data.
 Usually a signed JWT is all that is necessary.*
+
+Finally, it should go without saying that you should only ever exchange a JWT over a **secure SSL/HTTPS connection** -- same as you would a cookie.
 
 ## References
 
