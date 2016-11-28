@@ -29,12 +29,16 @@ This sample project is meant to illustrate that it is in fact quite simple.
 
 ## Using the Sample
 
-Clone or download the repo and open it in Visual Studio and hit `F5` to run.
+Clone or download the repo and open it in Visual Studio and hit `F5` to run (nuget packages should automatically be restored).
 That should fire-up the project in Visual Studio's (IIS Express) development server (on port 30908?).
+
+The meat and potatoes of what you want are in the `UsersController.cs`, `BearerAuthenticationFilter.cs`, and `SlidingExpirationHandler.cs` files.
 
 To see how JWTs are exchanged from browser to server and vice versa, open the `Example.html` file in the site root (`http://localhost:30908/example.html`).
 This file has a little jQuery in it to demonstrate some of the API calls with and without JWT authentication.
 Using your Chrome Developer Tools and Visual Studio, trace some of the API calls.
+
+Study the code.
 Read the docs.
 Learn.
 
