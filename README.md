@@ -7,7 +7,7 @@ A sample project for adding JWT authentication and sliding expiration support in
 I like JWT. I think it is a simple and elegant solution for authenticating REST / AJAX / Web API calls.
 For some time now I've been urging my coworkers to switch our single-page-application (SPA) websites to use JWT for authentication instead of cookies.
 
-For those unfamiliar with it, however, it can be confusing and even difficult to integrate into their new / existing projects.
+For those unfamiliar with it, however, it can be scary, confusing, and even difficult to integrate into their new / existing projects based on some of the scattered resources and documentation out there.
 This sample project is meant to illustrate that it is in fact quite easy.
 
 ### Project Status
@@ -20,8 +20,8 @@ This sample project is meant to illustrate that it is in fact quite easy.
 * Demonstrates sliding expiration / renew / reissue token
 * Demonstrates custom claims and how JWT can be used in place of session / cookies
 * Works with existing Web API authentication, including the `[Authorized]` attribute
-* Uses Microsoft's JSON Web Token Handler library -- a well-tested and authoritative source for JWT support in Web API
-* Well-documented code and examples, including how to write a custom `IAuthenticationFilter` and `DelegatingHandler`
+* Uses Microsoft's JSON Web Token Handler library -- a well tested and authoritative source for JWT support in Web API
+* Well documented code and examples, including how to write a custom `IAuthenticationFilter` and `DelegatingHandler`
 * IIS hosting
 * Stepping stone to OAuth(2)
 
@@ -34,7 +34,7 @@ That should fire-up the project in Visual Studio's (IIS Express) development ser
 
 To see how JWTs are exchanged from browser to server and vice versa, open the `Example.html` file in the site root (`http://localhost:30908/example.html`).
 This file has a little jQuery in it to demonstrate some of the API calls with and without JWT authentication.
-Using your Chrome Developer Tools, and Visual Studio, trace some of the API calls.
+Using your Chrome Developer Tools and Visual Studio, trace some of the API calls.
 Read the docs.
 Learn.
 
