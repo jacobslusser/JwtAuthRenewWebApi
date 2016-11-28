@@ -1,10 +1,18 @@
 # JwtAuthRenewWebApi
 
-A sample for adding JWT authentication and sliding expiration support in Web API 2.
+A sample project for adding JWT authentication and sliding expiration support in Web API 2.
+
+### Background
+
+I like JWT. I think it is a simple and elegant solution for authenticating REST / AJAX / Web API calls.
+For some time now I've been urging my coworkers to switch our single-page-application (SPA) websites to use JWT for authentication instead of cookies.
+
+For those unfamiliar with it, however, it can be confusing and even difficult to integrate into their new / existing projects.
+This sample project is meant to illustrate that it is in fact quite easy.
 
 ### Project Status
 
-The important parts are there. What remains is to do is complete the documentation.
+**Done!** Just follow the instructions below for downloading and running the sample project and read the linked documentation if you want a better understanding of how it all works.
 
 ## Features
 
@@ -12,13 +20,8 @@ The important parts are there. What remains is to do is complete the documentati
 * Demonstrates sliding expiration / renew / reissue token
 * Demonstrates custom claims and how JWT can be used in place of session / cookies
 * Works with existing Web API authentication, including the `[Authorized]` attribute
-  * [Authentication and Authorization in ASP.NET Web API](https://www.asp.net/web-api/overview/security/authentication-and-authorization-in-aspnet-web-api)
 * Uses Microsoft's JSON Web Token Handler library -- a well-tested and authoritative source for JWT support in Web API
-  * [JSON Web Token Handler](https://msdn.microsoft.com/en-us/library/dn205065(v=vs.110).aspx)
-  * [`System.IdentityModel.Tokens.Jwt`](https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/)
 * Well-documented code and examples, including how to write a custom `IAuthenticationFilter` and `DelegatingHandler`
-  * [Authentication Filters in ASP.NET Web API 2](https://www.asp.net/web-api/overview/security/authentication-filters)
-  * [HTTP Message Handlers in ASP.NET Web API](https://www.asp.net/web-api/overview/advanced/http-message-handlers)
 * IIS hosting
 * Stepping stone to OAuth(2)
 
@@ -26,13 +29,27 @@ The important parts are there. What remains is to do is complete the documentati
 
 ## Using the Sample
 
-Coming soon...
+Clone or download the repo and open it in Visual Studio and hit `F5` to run.
+That should fire-up the project in Visual Studio's (IIS Express) development server (on port 30908?).
+
+To see how JWTs are exchanged from browser to server and vice versa, open the `Example.html` file in the site root (`http://localhost:30908/example.html`).
+This file has a little jQuery in it to demonstrate some of the API calls with and without JWT authentication.
+Using your Chrome Developer Tools, and Visual Studio, trace some of the API calls.
+Read the docs.
+Learn.
 
 ## Documentation
+
+I tend to over explain things. To that end, there is more documentation explaining the code than there is actual code in the project.
 
 * [Issuing a JWT](docs/Issuing-JWT.md)
 * [Validating a JWT](docs/Validating-JWT.md)
 * [Reissusing a JWT with a New (Sliding) Expiration](docs/Sliding-Expiration.md)
+
+## Credits
+
+The [JwtAuthWebApi](https://github.com/rnarayana/JwtAuthWebApi) project here on GitHub motivated me to create this project.
+I liked the idea of a simple project to explain JWT in Web API, but found that project to be outdated and overly complicated.
 
 ## License
 

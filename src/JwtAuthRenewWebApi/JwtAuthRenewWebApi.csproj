@@ -95,6 +95,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Example.html" />
+    <Content Include="Example.js" />
     <Content Include="packages.config" />
     <Content Include="App_Data\Users.json" />
     <None Include="Web.Debug.config">

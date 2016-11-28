@@ -1,5 +1,6 @@
 var token;
 
+// Look for an updated JWT in every repsonse
 $(document).ajaxComplete(function (event, jqXHR, ajaxOptions) {
   if (jqXHR.status >= 200 && jqXHR.status < 400) {
     var newToken = jqXHR.getResponseHeader('Set-Authorization');

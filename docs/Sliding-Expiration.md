@@ -107,3 +107,9 @@ $(document).ajaxComplete(function (event, jqXHR, ajaxOptions) {
 ```
 
 In practice, we would probably store the `token` in `localStorage` or `sessionStorage` and not a simple in-memory variable, but you get the idea.
+
+## References
+* [HTTP Message Handlers in ASP.NET Web API](https://www.asp.net/web-api/overview/advanced/http-message-handlers)
+* [jQuery ajaxComplete event](http://api.jquery.com/ajaxcomplete/)
+* [Stack Overflow: jQuery and AJAX response header](http://stackoverflow.com/a/4236041)
+* [HTTP cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies)
