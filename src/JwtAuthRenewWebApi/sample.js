@@ -1,3 +1,14 @@
+var token;
+
+$(document).ajaxComplete(function (event, jqXHR, ajaxOptions) {
+  if (jqXHR.status >= 200 && jqXHR.status < 400) {
+    var newToken = jqXHR.getResponseHeader('Set-Authorization');
+    if (newToken) {
+      token = newToken;
+    }
+  }
+});
+
 
 $.get('http://localhost:30908/api/v1/ping')
   .done(function () {

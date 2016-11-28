@@ -30,10 +30,9 @@ Coming soon...
 
 ## Documentation
 
-* Using the sample
 * [Issuing a JWT](docs/Issuing-JWT.md)
 * [Validating a JWT](docs/Validating-JWT.md)
-* Reissusing a JWT with a new (sliding) expiration
+* [Reissusing a JWT with a New (Sliding) Expiration](docs/Sliding-Expiration.md)
 
 ## License
 

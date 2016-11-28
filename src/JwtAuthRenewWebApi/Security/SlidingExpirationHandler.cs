@@ -39,7 +39,7 @@ namespace JwtAuthRenewWebApi.Security
             var lifetimeInMinutes = int.Parse(WebConfigurationManager.AppSettings["TokenLifetimeInMinutes"]);
 
             var token = UsersController.CreateToken(userId, fullName, lifetimeInMinutes);
-            response.Headers.Add("Authorization", token);
+            response.Headers.Add("Set-Authorization", token);
 
             return response;
         }
