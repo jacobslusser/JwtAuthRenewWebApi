@@ -88,7 +88,7 @@ Namely, we want to tell it to validate the issuer, audience, and signing key usi
 We also ask it to validate the expiration time. This is important and something you do not want to miss; otherwise, a token would never be considered expired and could be used forever.
 The token is valid when the payload hash matches the attached signature using the signing key, the issuer and audience match our whitelist, *and* the token's expiration date/time has not passed.
 
-If the token is valid, the helper class will automatically create the `ClaimsPrincipal` we use it to set the current user.
+If the token is valid, the helper class will automatically create a `ClaimsPrincipal` that we can use to set the current user.
 That is the key to getting the `[Authorize]` attribute to work. The `AuthorizeAttribute` looks for a current user / thread principal.
 If found the request is considered authorized; if not, it is rejected automatically with a `401 Unauthorized` error.
 
