@@ -1,29 +1,17 @@
 # Reissusing a JWT with a New (Sliding) Expiration
 
-I meet a lot of developers who don't know how session works in ASP.NET.
-Many believe that when session is about to expire and is extended by user activity, that ASP.NET somehow updates the cookie with a new expiration timeout.
-In fact, that's not true at all. What really happens is that the browser sends the session cookie to the server and the server creates a NEW cookie by the same name and sends it back to the browser.
-The browser then replaces the old cookie with the new one.
-
-This exchange of cookie data from browser to server and back again happen in the `Cookie` and `Set-Cookie` headers.
-The browser sends a cookie in the request with the `Cookie` header.
-The server sends a cookie in the response with the `Set-Cookie` header.
-To achieve "sliding expiration" with JWT we are going to do essentially the same thing.
-
-## How Not to Update a JWT
-
 I was once on a project where the developers were using JWT for authentication but it had an absolute expiration.
-I asked them to make it a sliding expiration and their response was that it would be a huge development task because they would have to potentially return a new JWT in any response and would therefore need to add it is a property in the response model for every call.
+I asked them to make it a sliding expiration and their response was that it would be a huge development task because they would have to potentially return a new JWT in any / every response and would therefore need to add it is a property in the response model for every call.
 At this point I face palmed and started working on this sample project to illustrate how much easier it is than that when you understand the HTTP protocol and the Web API pipeline.
 
 The JWT is a piece of authenticating information -- metadata about the request / response, not part of the request / response content.
 Thus it belongs in an HTTP header that describes the request / response (metadata), not part of the request / response content itself.
-This of it like a cookie.
+Think of it like a cookie.
 A cookie is sent by the browser to the server in the `Cookie` header.
 The server sends an updated cookie to the browser in the `Set-Cookie` header.
 To achieve "sliding expiration" with JWT we are going to do essentially the same thing.
 
-In our case the JWT is sent to the server in the `Authorization` header on the request as previously discussed.
+In our case the JWT is sent to the server in the `Authorization` header.
 Following the pattern used by cookies, we can return an updated JWT in the response in the `Set-Authorization` header.
 *The `Set-Authorization` header is not a standard header. I came up with it following the naming convention for cookies.
 You can call your response header anything you want because the HTTP specification allows any number of arbitrary headers.*
@@ -79,7 +67,7 @@ Couldn't be easier.
 
 If we wanted to get fancy we could minimize how often we respond with an updated JWT by calculating the time left before expiration and only issue a new one if it is about to expire.
 
-Remember, we only get a valid `ClaimsPrincipal` if the request was authenticated with a valid JWT to being with, so there is no danger of us returning an updated JWT to a caller who never had one in the first place.
+Remember, we only get a valid `ClaimsPrincipal` if the request was authenticated with a valid JWT to begin with, so there is no danger of us returning an updated JWT to a caller who never had one in the first place.
 
 ## Registering the handler
 
@@ -100,7 +88,7 @@ public static void Register(HttpConfiguration config)
 ## Seeing it in Action
 
 Obviously our client code needs to understand that an updated JWT may be returned in the `Set-Authentication` header of any of our Web API responses.
-Fortunately most AJAX libraries, including jQuery, have mechanisms to run the same bit of code on every call similar to the way we can run a handler for every request / response in Web API.
+Fortunately most AJAX libraries, including jQuery, have mechanisms to run the same bit of code on every call similar to the way we can run a handler for every request / response in the Web API pipeline.
 If we use these hooks to look for an updated JWT and update our copy in memory, we can automatically get the latest JWT from any response and use it in any future requests.
 
 Here is just one way this can be done using jQuery:
@@ -118,4 +106,4 @@ $(document).ajaxComplete(function (event, jqXHR, ajaxOptions) {
 });
 ```
 
-In practice, we would actually probably store the JWT in `localStorage` or `sessionStorage` but you get the idea.
+In practice, we would probably store the `token` in `localStorage` or `sessionStorage` and not a simple in-memory variable, but you get the idea.
