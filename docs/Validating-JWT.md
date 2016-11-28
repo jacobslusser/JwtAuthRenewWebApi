@@ -102,7 +102,7 @@ Problem solved. Now the `Name` property of the controller `User.Identity.Name` w
 
 *This step is only necessary because I'm picky about my JWT claim names. We could have just as easily used the `ClaimTypes.Name` constant when we created the JWT and avoided this mapping step.*
 
-## Using the IAuthenticationFilter
+## Registering the Filter
 
 We want the `BearerAuthenticationFilter` class we created to run on every request, so the last step to getting this setup is to register the filter at startup in the `WebApiConfig`:
 
