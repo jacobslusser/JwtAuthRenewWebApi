@@ -59,7 +59,7 @@ I liked the idea of a simple project to explain JWT in Web API, but found that p
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Jacob Slusser, https://github.com/jacobslusser
+Copyright (c) 2017 Jacob Slusser, https://github.com/jacobslusser
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
